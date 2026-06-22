@@ -1,0 +1,59 @@
+# Command-line interface
+
+## Version
+
+```bash
+text2epub version
+```
+
+Prints the package version reported by `text2epub._version`.
+
+## Build from Markdown
+
+```bash
+text2epub markdown INPUT.md -o OUTPUT.epub
+text2epub markdown CHAPTER_DIR -o OUTPUT.epub --title "Book" --language en
+```
+
+Options:
+
+- `--title`, `--language`, `--creator`, `--identifier`, `--publisher`, `--description`, `--rights`, `--date`: metadata fields.
+- `--no-ncx`: omit the EPUB 2 NCX table of contents file.
+- `--non-deterministic`: use fresh UUID/timestamps instead of deterministic output.
+- `--allow-remote-resources`: allow remote image URLs to remain external.
+- `--json`: print a machine-readable result.
+
+## Rebuild an EPUB
+
+```bash
+text2epub rebuild SOURCE.epub MANIFEST.json REPLACEMENTS.json -o OUTPUT.epub
+```
+
+The replacements file contains a `replacements` array:
+
+```json
+{
+  "replacements": [
+    {
+      "block_id": "spine-0001:block-000001",
+      "text": "Updated text.",
+      "expected_source": "Original text.",
+      "allow_inline_xhtml": false
+    }
+  ]
+}
+```
+
+Options:
+
+- `--allow-unresolved-tokens`: disable unresolved-token failure for rebuild output.
+- `--json`: print the replacement report as JSON.
+
+## Validate an EPUB
+
+```bash
+text2epub validate OUTPUT.epub
+text2epub validate OUTPUT.epub --json
+```
+
+Validation checks ZIP readability, the EPUB `mimetype` entry, `META-INF/container.xml`, and unresolved-token patterns in text entries.

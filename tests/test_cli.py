@@ -101,3 +101,17 @@ def test_cli_validate_detects_bad_epub(tmp_path: Path) -> None:
     )
 
     assert result.returncode != 0
+
+
+def test_cli_validate_missing_file_reports_clean_error(tmp_path: Path) -> None:
+    missing = tmp_path / "missing.epub"
+
+    result = subprocess.run(
+        [sys.executable, "-m", "text2epub", "validate", str(missing)],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "Traceback" not in result.stderr
+    assert "missing.epub" in result.stderr

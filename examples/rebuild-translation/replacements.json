@@ -1,0 +1,16 @@
+{
+  "replacements": [
+    {
+      "block_id": "spine-0001:block-000001",
+      "text": "El rápido zorro marrón salta sobre el perro perezoso.",
+      "expected_source": "The quick brown fox jumps over the lazy dog.",
+      "allow_inline_xhtml": false
+    },
+    {
+      "block_id": "spine-0001:block-000002",
+      "text": "She sold <em>sea shells</em> by the sea shore.",
+      "expected_source": "She sold sea shells by the sea shore.",
+      "allow_inline_xhtml": true
+    }
+  ]
+}

@@ -217,6 +217,30 @@ def test_images_local_only_by_default(tmp_path: Path) -> None:
     assert "../Images/image-001.png" in chapter_text
 
 
+def test_remote_images_allowed_stay_external(tmp_path: Path) -> None:
+    chapter = tmp_path / "chapter.md"
+    chapter.write_text(
+        "# Images\n\n![Remote](https://example.com/cover.png)\n",
+        encoding="utf-8",
+    )
+    output = tmp_path / "book.epub"
+
+    create_epub_from_markdown(
+        MarkdownBook(
+            metadata=EpubMetadata(title="Example"),
+            chapters=[MarkdownChapter(path=chapter)],
+            options=BuildOptions(allow_remote_resources=True),
+        ),
+        output,
+    )
+
+    with zipfile.ZipFile(output) as archive:
+        chapter_text = archive.read("OEBPS/Text/chapter-001.xhtml").decode("utf-8")
+
+    assert "https://example.com/cover.png" in chapter_text
+    assert not any(name.startswith("OEBPS/Images/") for name in archive.namelist())
+
+
 def test_remote_images_rejected_by_default(tmp_path: Path) -> None:
     chapter = tmp_path / "chapter.md"
     chapter.write_text(

@@ -6,7 +6,12 @@ from pathlib import Path
 import pytest
 
 from text2epub import Replacement, ReplacementPlan, rebuild_epub
-from text2epub.errors import ReplacementError, UnsafeFragmentError, ValidationError
+from text2epub.errors import (
+    PackageError,
+    ReplacementError,
+    UnsafeFragmentError,
+    ValidationError,
+)
 from text2epub.validation import sha256_path
 
 from .helpers import create_manifest_for_fragment, create_test_epub, write_manifest
@@ -290,3 +295,37 @@ def test_leaked_booktx_tokens_fail(tmp_path: Path) -> None:
             ),
             tmp_path / "out.epub",
         )
+
+
+def test_duplicate_block_ids_in_manifest_fail(tmp_path: Path) -> None:
+    source = create_test_epub(tmp_path / "source.epub", ["<p>Original text.</p>"])
+    manifest = create_manifest_for_fragment(
+        source,
+        "OEBPS/Text/chapter01.xhtml",
+        "Original text.",
+        replacement_mode="text_node_sequence",
+    )
+    duplicate = dict(manifest["entries"][0]["blocks"][0])
+    manifest["entries"][0]["blocks"].append(duplicate)
+
+    with pytest.raises(ReplacementError):
+        rebuild_epub(
+            ReplacementPlan(
+                source_epub=source,
+                extraction_manifest=manifest,
+                replacements=[
+                    Replacement(
+                        block_id="spine-0001:block-000001",
+                        text="Updated text.",
+                    )
+                ],
+            ),
+            tmp_path / "out.epub",
+        )
+
+
+def test_rebuild_refuses_in_place_output(tmp_path: Path) -> None:
+    source = create_test_epub(tmp_path / "source.epub", ["<p>Original text.</p>"])
+
+    with pytest.raises(PackageError, match="overwrite the source EPUB"):
+        rebuild_epub(ReplacementPlan(source_epub=source, replacements=[]), source)

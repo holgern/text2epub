@@ -206,7 +206,12 @@ def build_manifest_index(
             block_id = block.get("block_id")
             if not block_id:
                 raise ReplacementError("Manifest block is missing block_id.")
-            indexed[str(block_id)] = (entry, block)
+            normalized_block_id = str(block_id)
+            if normalized_block_id in indexed:
+                raise ReplacementError(
+                    f"Manifest block {normalized_block_id} appears more than once."
+                )
+            indexed[normalized_block_id] = (entry, block)
     return indexed
 
 
@@ -314,9 +319,8 @@ def validate_inline_fragment(fragment: str, *, block_id: str, mode: str) -> None
                     f"Replacement block {block_id} contains forbidden attribute "
                     f"{local_attr!r}."
                 )
-            if (
-                local_attr == "href"
-                and text_value.strip().lower().startswith("javascript:")
+            if local_attr == "href" and text_value.strip().lower().startswith(
+                "javascript:"
             ):
                 raise UnsafeFragmentError(
                     f"Replacement block {block_id} contains forbidden javascript href."

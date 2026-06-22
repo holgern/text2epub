@@ -74,3 +74,14 @@ text2epub rebuild SOURCE.epub MANIFEST.json REPLACEMENTS.json -o OUTPUT.epub
 text2epub validate OUTPUT.epub
 text2epub version
 ```
+
+## Documentation
+
+The Sphinx documentation lives under `docs/`. Build it locally with:
+
+```bash
+python -m pip install -e ".[docs]"
+python -m sphinx -b html docs docs/_build/html
+```
+
+Start with `docs/index.md` for the user guide and `docs/release-checklist.md` for release validation.

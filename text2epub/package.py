@@ -55,6 +55,11 @@ def deterministic_zip_info(
 def copy_epub(source_epub: Path | str, output_path: Path | str) -> Path:
     source = coerce_path(source_epub)
     destination = coerce_path(output_path)
+    if source.resolve() == destination.resolve():
+        raise PackageError(
+            "Refusing to overwrite the source EPUB in place; choose a different "
+            "output path."
+        )
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(source, destination)
     return destination
@@ -101,6 +106,11 @@ def rewrite_epub(
 ) -> Path:
     source = coerce_path(source_epub)
     destination = coerce_path(output_path)
+    if source.resolve() == destination.resolve():
+        raise PackageError(
+            "Refusing to overwrite the source EPUB in place; choose a different "
+            "output path."
+        )
     destination.parent.mkdir(parents=True, exist_ok=True)
 
     try:

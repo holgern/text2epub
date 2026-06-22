@@ -33,6 +33,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return args.handler(args)
     except Text2EpubError as exc:
         parser.exit(1, f"{exc}\n")
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        parser.exit(1, f"{exc}\n")
     return 0
 
 

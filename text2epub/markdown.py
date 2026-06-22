@@ -125,11 +125,13 @@ def render_markdown_body(
             src = element.get("src")
             if not src:
                 continue
-            if is_remote_resource(src) and not allow_remote_resources:
-                raise BuildError(
-                    f"Chapter {chapter_path} references remote image {src!r}, "
-                    "which is disabled by default."
-                )
+            if is_remote_resource(src):
+                if not allow_remote_resources:
+                    raise BuildError(
+                        f"Chapter {chapter_path} references remote image {src!r}, "
+                        "which is disabled by default."
+                    )
+                continue
             asset_path = (chapter_path.parent / src).resolve()
             if not asset_path.exists():
                 raise BuildError(
