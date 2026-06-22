@@ -75,13 +75,11 @@ def test_single_text_replacement_changes_only_target_entry(tmp_path: Path) -> No
         zipfile.ZipFile(source) as source_archive,
         zipfile.ZipFile(output) as out_archive,
     ):
-        assert (
-            source_archive.read("OEBPS/Text/chapter02.xhtml")
-            == out_archive.read("OEBPS/Text/chapter02.xhtml")
+        assert source_archive.read("OEBPS/Text/chapter02.xhtml") == out_archive.read(
+            "OEBPS/Text/chapter02.xhtml"
         )
-        assert (
-            source_archive.read("OEBPS/Images/cover.png")
-            == out_archive.read("OEBPS/Images/cover.png")
+        assert source_archive.read("OEBPS/Images/cover.png") == out_archive.read(
+            "OEBPS/Images/cover.png"
         )
         assert b"Updated text." in out_archive.read("OEBPS/Text/chapter01.xhtml")
 

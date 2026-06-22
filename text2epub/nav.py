@@ -10,8 +10,7 @@ def build_nav_document(
     title: str, chapters: Sequence[XhtmlChapter], language: str
 ) -> str:
     chapter_lines = "\n".join(
-        "      "
-        f'<li><a href="{escape(chapter.href)}">{escape(chapter.title)}</a></li>'
+        f'      <li><a href="{escape(chapter.href)}">{escape(chapter.title)}</a></li>'
         for chapter in chapters
     )
     return (

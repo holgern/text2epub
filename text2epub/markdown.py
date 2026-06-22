@@ -152,8 +152,7 @@ def render_markdown_body(
             href = element.get("href")
             if href and href.strip().lower().startswith("javascript:"):
                 raise BuildError(
-                    f"Chapter {chapter_path} contains unsafe javascript link "
-                    f"{href!r}."
+                    f"Chapter {chapter_path} contains unsafe javascript link {href!r}."
                 )
 
     body_xhtml = "".join(

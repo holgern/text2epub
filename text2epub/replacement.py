@@ -6,7 +6,7 @@ import zipfile
 from collections import defaultdict
 from collections.abc import Mapping
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from lxml import etree
 
@@ -42,9 +42,7 @@ ALLOWED_INLINE_ATTRIBUTES = {
 }
 
 
-def rebuild_epub(
-    plan: ReplacementPlan, output_path: Path | str
-) -> ReplacementReport:
+def rebuild_epub(plan: ReplacementPlan, output_path: Path | str) -> ReplacementReport:
     source_epub = coerce_path(plan.source_epub)
     output = coerce_path(output_path)
     validate_epub_package(source_epub)
@@ -113,9 +111,7 @@ def rebuild_epub(
                     f"{block_text!r}."
                 )
 
-            replacement_mode = str(
-                block.get("replacement_mode", "whole_block_body")
-            )
+            replacement_mode = str(block.get("replacement_mode", "whole_block_body"))
             rendered = render_replacement_text(
                 replacement,
                 block_id=replacement.block_id,
@@ -154,9 +150,7 @@ def rebuild_epub(
         )
 
     rewrite_epub(source_epub, output, changed_bytes_entries)
-    changed_entries = [
-        name for name in source_names if name in changed_bytes_entries
-    ]
+    changed_entries = [name for name in source_names if name in changed_bytes_entries]
     unchanged_entries = [
         name for name in source_names if name not in changed_bytes_entries
     ]
@@ -240,9 +234,7 @@ def validate_entry_hash(
         )
 
 
-def block_range(
-    block: Mapping[str, Any], block_id: str
-) -> tuple[int, int]:
+def block_range(block: Mapping[str, Any], block_id: str) -> tuple[int, int]:
     replacement_mode = str(block.get("replacement_mode", "whole_block_body"))
     if replacement_mode == "whole_block_body":
         start = block.get("body_source_start", block.get("source_start"))
@@ -291,11 +283,7 @@ def render_replacement_text(
 
 
 def validate_inline_fragment(fragment: str, *, block_id: str, mode: str) -> None:
-    wrapper = (
-        '<root xmlns="http://www.w3.org/1999/xhtml">'
-        f"{fragment}"
-        "</root>"
-    )
+    wrapper = f'<root xmlns="http://www.w3.org/1999/xhtml">{fragment}</root>'
     try:
         parser = etree.XMLParser(resolve_entities=False, no_network=True)
         root = etree.fromstring(wrapper.encode("utf-8"), parser=parser)
@@ -313,7 +301,9 @@ def validate_inline_fragment(fragment: str, *, block_id: str, mode: str) -> None
                 f"{local_name!r} for mode {mode!r}."
             )
         for attribute_name, value in element.attrib.items():
-            local_attr = _attribute_name(attribute_name)
+            name = cast("str", attribute_name)
+            text_value = cast("str", value)
+            local_attr = _attribute_name(name)
             if local_attr.startswith("on"):
                 raise UnsafeFragmentError(
                     f"Replacement block {block_id} contains forbidden event "
@@ -324,10 +314,12 @@ def validate_inline_fragment(fragment: str, *, block_id: str, mode: str) -> None
                     f"Replacement block {block_id} contains forbidden attribute "
                     f"{local_attr!r}."
                 )
-            if local_attr == "href" and value.strip().lower().startswith("javascript:"):
+            if (
+                local_attr == "href"
+                and text_value.strip().lower().startswith("javascript:")
+            ):
                 raise UnsafeFragmentError(
-                    f"Replacement block {block_id} contains forbidden javascript "
-                    "href."
+                    f"Replacement block {block_id} contains forbidden javascript href."
                 )
 
 
@@ -361,9 +353,7 @@ def validate_non_overlapping_ranges(
         previous_end = end
 
 
-def apply_changes(
-    original: str, changes: list[tuple[int, int, str, str]]
-) -> str:
+def apply_changes(original: str, changes: list[tuple[int, int, str, str]]) -> str:
     updated = original
     for start, end, replacement_text, _ in sorted(
         changes, key=lambda item: item[0], reverse=True

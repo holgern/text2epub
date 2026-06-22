@@ -4,6 +4,7 @@ import base64
 import json
 import zipfile
 from pathlib import Path
+from typing import Any
 
 from text2epub.validation import sha256_bytes, sha256_path
 
@@ -50,10 +51,7 @@ def create_test_epub(
         for index in range(1, len(chapter_bodies) + 1)
     )
     nav_items = "\n".join(
-        (
-            f'      <li><a href="Text/chapter{index:02d}.xhtml">'
-            f"Chapter {index}</a></li>"
-        )
+        (f'      <li><a href="Text/chapter{index:02d}.xhtml">Chapter {index}</a></li>')
         for index in range(1, len(chapter_bodies) + 1)
     )
     content_opf = (
@@ -64,7 +62,7 @@ def create_test_epub(
         "  <metadata>\n"
         "    <dc:title>Fixture</dc:title>\n"
         "    <dc:language>en</dc:language>\n"
-        "    <dc:identifier id=\"bookid\">urn:uuid:fixture</dc:identifier>\n"
+        '    <dc:identifier id="bookid">urn:uuid:fixture</dc:identifier>\n'
         "  </metadata>\n"
         "  <manifest>\n"
         '    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" '
@@ -141,13 +139,13 @@ def create_manifest_for_fragment(
     block_id: str = "spine-0001:block-000001",
     replacement_mode: str = "whole_block_body",
     block_text: str | None = None,
-) -> dict[str, object]:
+) -> dict[str, Any]:
     with zipfile.ZipFile(epub_path) as archive:
         raw_bytes = archive.read(entry_name)
         text = raw_bytes.decode("utf-8")
     start = text.index(source_fragment)
     end = start + len(source_fragment)
-    block: dict[str, object] = {
+    block: dict[str, Any] = {
         "block_id": block_id,
         "text": block_text if block_text is not None else source_fragment,
         "source_start": start,
@@ -173,6 +171,6 @@ def create_manifest_for_fragment(
     }
 
 
-def write_manifest(path: Path, manifest: dict[str, object]) -> Path:
+def write_manifest(path: Path, manifest: dict[str, Any]) -> Path:
     path.write_text(json.dumps(manifest), encoding="utf-8")
     return path

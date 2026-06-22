@@ -54,7 +54,7 @@ def build_content_opf(
         f"    <dc:title>{escape(metadata.title)}</dc:title>",
         f"    <dc:language>{escape(metadata.language or 'en')}</dc:language>",
         f'    <dc:identifier id="bookid">{escape(identifier)}</dc:identifier>',
-        f"    <meta property=\"dcterms:modified\">{escape(modified)}</meta>",
+        f'    <meta property="dcterms:modified">{escape(modified)}</meta>',
     ]
     metadata_lines.extend(
         f"    <dc:creator>{escape(_author_name(author))}</dc:creator>"

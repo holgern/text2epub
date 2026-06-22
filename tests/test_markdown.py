@@ -66,12 +66,7 @@ def test_front_matter_metadata(tmp_path: Path) -> None:
 def test_explicit_metadata_overrides_front_matter(tmp_path: Path) -> None:
     chapter = tmp_path / "chapter.md"
     chapter.write_text(
-        "---\n"
-        "title: Front Matter Title\n"
-        "language: de\n"
-        "---\n"
-        "\n"
-        "# Kapitel\n\nHallo.\n",
+        "---\ntitle: Front Matter Title\nlanguage: de\n---\n\n# Kapitel\n\nHallo.\n",
         encoding="utf-8",
     )
     output = tmp_path / "book.epub"

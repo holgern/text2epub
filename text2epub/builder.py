@@ -37,9 +37,7 @@ h1, h2, h3 {
 """
 
 
-def create_epub_from_markdown(
-    book: MarkdownBook, output_path: Path | str
-) -> Path:
+def create_epub_from_markdown(book: MarkdownBook, output_path: Path | str) -> Path:
     rendered = prepare_markdown_book(book)
     return create_epub(
         metadata=rendered.metadata,
@@ -134,9 +132,7 @@ def create_epub(
         asset_items=asset_items,
     )
     generated_text_entries[CONTENT_OPF_ENTRY] = content_opf
-    package_entries.append(
-        PackageEntry(CONTENT_OPF_ENTRY, content_opf.encode("utf-8"))
-    )
+    package_entries.append(PackageEntry(CONTENT_OPF_ENTRY, content_opf.encode("utf-8")))
 
     if resolved_options.fail_on_unresolved_tokens:
         ensure_no_unresolved_tokens(

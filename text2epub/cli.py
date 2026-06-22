@@ -53,9 +53,7 @@ def build_parser() -> argparse.ArgumentParser:
     markdown_parser.add_argument("--date")
     markdown_parser.add_argument("--no-ncx", action="store_true")
     markdown_parser.add_argument("--non-deterministic", action="store_true")
-    markdown_parser.add_argument(
-        "--allow-remote-resources", action="store_true"
-    )
+    markdown_parser.add_argument("--allow-remote-resources", action="store_true")
     markdown_parser.add_argument("--json", action="store_true")
     markdown_parser.set_defaults(handler=handle_markdown)
 
@@ -154,8 +152,7 @@ def handle_validate(args: argparse.Namespace) -> int:
     if findings:
         entry_name, token = findings[0]
         raise ValidationError(
-            f"Unresolved internal token {token!r} remains in ZIP entry "
-            f"{entry_name!r}."
+            f"Unresolved internal token {token!r} remains in ZIP entry {entry_name!r}."
         )
     if args.json:
         print(

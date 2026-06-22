@@ -45,8 +45,7 @@ def ensure_no_unresolved_tokens(
     if findings:
         entry_name, token = findings[0]
         raise ValidationError(
-            f"Unresolved internal token {token!r} remains in ZIP entry "
-            f"{entry_name!r}."
+            f"Unresolved internal token {token!r} remains in ZIP entry {entry_name!r}."
         )
     return len(findings)
 
