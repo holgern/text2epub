@@ -308,4 +308,3 @@ def apply_changes(original: str, changes: list[tuple[int, int, str, str]]) -> st
     ):
         updated = updated[:start] + replacement_text + updated[end:]
     return updated
-

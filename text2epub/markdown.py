@@ -297,8 +297,7 @@ def validate_rendered_xhtml_tree(root: etree._Element, *, chapter_path: Path) ->
             continue
         if local_name not in allowed_tags:
             raise BuildError(
-                f"Chapter {chapter_path} contains unsupported XHTML tag "
-                f"{local_name!r}."
+                f"Chapter {chapter_path} contains unsupported XHTML tag {local_name!r}."
             )
         for raw_attribute_name, value in element.attrib.items():
             local_attr = attribute_name(raw_attribute_name)
@@ -331,10 +330,7 @@ def is_allowed_rendered_attribute(tag: str, attr: str, value: str) -> bool:
     if tag == "ol" and attr == "start":
         return True
     if tag in {"td", "th"} and attr == "style":
-        return (
-            re.fullmatch(r"text-align\s*:\s*(left|right|center)", value)
-            is not None
-        )
+        return re.fullmatch(r"text-align\s*:\s*(left|right|center)", value) is not None
     return False
 
 

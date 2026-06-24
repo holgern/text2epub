@@ -113,7 +113,6 @@ EPUB NAV file is still generated separately for reader navigation.
 using CSS `target-counter()`. EPUB readers do not share one universal page model,
 so unsupported readers will show the linked entries without page numbers.
 
-
 ## Safe inline XHTML
 
 By default, raw HTML in Markdown is escaped. Enable safe inline XHTML when source

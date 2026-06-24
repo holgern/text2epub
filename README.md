@@ -134,7 +134,6 @@ book = MarkdownBook(
 create_epub_from_markdown(book, Path("book.epub"))
 ```
 
-
 ## Safe inline XHTML in Markdown
 
 Raw HTML is escaped by default. When your source text comes from `epub2text`
