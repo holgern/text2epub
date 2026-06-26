@@ -7,20 +7,6 @@
     "kind": "added",
     "order": 1,
     "record_revision": 1,
-    "release_version": "v0.1.2",
-    "scopes": [],
-    "source_refs": ["git:b183c7eae2937c598f16192139c08d5404b0344c"],
-    "status": "accepted",
-    "summary": "Added inline XHTML support in markdown for embedding formatted content"
-  },
-  {
-    "audience": null,
-    "breaking": false,
-    "entry_id": "entry-0001",
-    "internal": false,
-    "kind": "added",
-    "order": 1,
-    "record_revision": 1,
     "release_version": "v0.1.0",
     "scopes": [],
     "source_refs": ["git:1f60cd749eefd44fbc973db25a9a7e1e1f7dd91d"],
@@ -44,16 +30,19 @@
   {
     "audience": null,
     "breaking": false,
-    "entry_id": "entry-0002",
-    "internal": true,
-    "kind": "internal",
-    "order": 2,
-    "record_revision": 1,
+    "entry_id": "entry-0001",
+    "internal": false,
+    "kind": "added",
+    "order": 1,
+    "record_revision": 3,
     "release_version": "v0.1.2",
     "scopes": [],
-    "source_refs": ["git:30758167fbdc34506b347666833543c318afd16a"],
+    "source_refs": [
+      "git:b183c7eae2937c598f16192139c08d5404b0344c",
+      "git:9eaca1c63aca03eabba411baf15ce987c273f6b8"
+    ],
     "status": "accepted",
-    "summary": "Pre-commit and linting fixes"
+    "summary": "Added inline XHTML support in markdown for embedding formatted content"
   },
   {
     "audience": null,
@@ -82,6 +71,24 @@
     "source_refs": ["git:9526e2ee865ce9669f0960fdbf7d1d355e7af419"],
     "status": "accepted",
     "summary": "Added optional title page and table of contents generation"
+  },
+  {
+    "audience": null,
+    "breaking": false,
+    "entry_id": "entry-0002",
+    "internal": true,
+    "kind": "internal",
+    "order": 2,
+    "record_revision": 2,
+    "release_version": "v0.1.2",
+    "scopes": [],
+    "source_refs": [
+      "git:30758167fbdc34506b347666833543c318afd16a",
+      "git:777417bf8fa51b8446d866f22914496b59e63bcc",
+      "git:896d1a0be44315ec0613bf4d042e4719fc9dad61"
+    ],
+    "status": "accepted",
+    "summary": "Pre-commit and linting fixes"
   },
   {
     "audience": null,
