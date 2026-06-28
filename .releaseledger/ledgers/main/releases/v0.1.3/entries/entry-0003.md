@@ -12,9 +12,9 @@ status: accepted
 audience: null
 scopes: []
 source_refs:
-- git:4a8013640a67603b2f79d615ee2a0f2fb5c39d86
+  - git:4a8013640a67603b2f79d615ee2a0f2fb5c39d86
 paths:
-- tests/test_output_rewrite.py
+  - tests/test_output_rewrite.py
 issues: []
 prs: []
 sources: []

@@ -12,12 +12,12 @@ status: accepted
 audience: null
 scopes: []
 source_refs:
-- git:9e50e93dd902ad5bfab27e038baf4f47ca4e9a2e
+  - git:9e50e93dd902ad5bfab27e038baf4f47ca4e9a2e
 paths:
-- tests/test_models.py
-- tests/test_output_rewrite.py
-- text2epub/output_rewrite.py
-- text2epub/replacement.py
+  - tests/test_models.py
+  - tests/test_output_rewrite.py
+  - text2epub/output_rewrite.py
+  - text2epub/replacement.py
 issues: []
 prs: []
 sources: []
