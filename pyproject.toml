@@ -47,7 +47,6 @@ text2epub = "text2epub.cli:main"
 
 [tool.setuptools_scm]
 write_to = "text2epub/_version.py"
-fallback_version = "0.1.dev0"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
